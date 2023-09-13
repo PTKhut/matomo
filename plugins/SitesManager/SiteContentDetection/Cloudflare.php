@@ -58,13 +58,14 @@ class Cloudflare extends SiteContentDetectionAbstract
     {
         $view     = new View("@SitesManager/_cloudflareTabInstructions");
         $view->idSite = Request::fromRequest()->getIntegerParameter('idSite');
+        $view->wasDetected = $detector->wasDetected(self::getId());
         $view->sendHeadersWhenRendering = false;
         return $view->render();
     }
 
     public function renderOthersInstruction(SiteContentDetector $detector): string
     {
-        if ($detector->wasDetected(self::class)) {
+        if ($detector->wasDetected(self::getId())) {
             return ''; // don't show on others page if tab is being displayed
         }
 

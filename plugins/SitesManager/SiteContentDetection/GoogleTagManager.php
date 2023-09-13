@@ -76,6 +76,7 @@ class GoogleTagManager extends SiteContentDetectionAbstract
             ]
         );
         $view = new View('@SitesManager/_gtmTabInstructions');
+        $view->wasDetected = $detector->wasDetected(self::getId());
         $view->jsTag = $jsTag;
         $view->sendHeadersWhenRendering = false;
         return $view->render();
@@ -83,7 +84,7 @@ class GoogleTagManager extends SiteContentDetectionAbstract
 
     public function renderOthersInstruction(SiteContentDetector $detector): string
     {
-        if ($detector->wasDetected(self::class)) {
+        if ($detector->wasDetected(self::getId())) {
             return ''; // don't show on others page if tab is being displayed
         }
 
